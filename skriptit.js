@@ -12,7 +12,8 @@ function toinenNappula() {
     document.querySelector('#c1btn').click();
 }
 */
-let pelaajienlkm = noppienlkm = pisteraja = 0;
+let pelaajienlkm = noppienlkm = pisteraja = nykyinenpelaaja = 0;
+
 class pelaaja {
     constructor() {
         this.ndx = 0;
@@ -140,8 +141,58 @@ function pelikierroksenAloitus() {
         ele.classList.remove('piilossa');
     });
 
-    document.querySelector('#pelaaja1-collapsebutton').click();
-    document.querySelector('#pelaaja1-kortti').classList.add('border-primary');
+    document.querySelector('#toiminta-alue').classList.remove('piilossa');
+
+    nykyinenpelaaja = 1;
+    pelivuoro(true);
+
+}
+
+let vuoronpisteet = 0;
+
+function pelivuoro(pelaajavaihtui) {
+    
+    document.querySelector('#noppa1').ontransitionend = '';
+
+    if (pelaajavaihtui) {
+        vuoronpisteet = 0;
+        if (!document.querySelector('#pelaaja'+nykyinenpelaaja+'-collapsebutton').classList.contains('show')) {
+            document.querySelector('#pelaaja'+nykyinenpelaaja+'-collapsebutton').click();
+        }
+        document.querySelector('#pelaaja'+nykyinenpelaaja+'-kortti').classList.add('border-primary');
+        document.querySelector('#nykyinenpelaaja').innerText = pelaajalista[nykyinenpelaaja-1].nimi;
+    }
+
+    document.querySelectorAll('.napit button').forEach(itm => {
+        itm.classList.add('disabled');
+    });
+
+    let luku1 = rnd();
+    let luku2 = (noppienlkm == 2) ? rnd() : 0;
+
+    paivitanoppa(luku1,1);
+    if (luku2) {
+        paivitanoppa(luku2,2);
+    }
+
+    document.querySelector('#noppa1').ontransitionend = () => {
+        if (noppienlkm == 1 && luku1 == 1) {
+            document.querySelector('#statusrivi').innerText = 'Voi ei, heitit ykkösen. Menetät kierroksen pisteet!';
+            vuoronpisteet = 0;
+            document.querySelector('#pelaaja'+nykyinenpelaaja+'-kierpisteet').innerText = vuoronpisteet;
+        } else {
+            let summa = luku1 + luku2;
+            document.querySelector('#statusrivi').innerText = 'Heitit '+summa+', haluatko jatkaa?';
+            vuoronpisteet += summa;
+            document.querySelector('#pelaaja'+nykyinenpelaaja+'-kierpisteet').innerText = vuoronpisteet;
+        }
+        
+        document.querySelectorAll('.napit button').forEach(itm => {
+            itm.classList.remove('disabled');
+        });
+    
+    }
+
 }
 
 function seuraavaNimi(nykyinen) {
@@ -180,6 +231,13 @@ function aloita() {
         lisaaPelaaja(i+1);
     }
 
+/* 
+    TARVITSEE DEBUGGAUKSEN:
+    jokin transform laitettava, ettei pöyrityksen uudelleenaronta aiheuta virhettä ensimmäisellä pyöräytyksellä
+*/
+    document.querySelector('#noppa1').style.transform = 'rotete3d(0,0,0,0deg)';
+    document.querySelector('#noppa2').style.transform = 'rotete3d(0,0,0,0deg)';
+
     if (noppienlkm == 1) {
         document.querySelector('#noppa2-alue').classList.add('piilossa');
     } else {
@@ -188,8 +246,17 @@ function aloita() {
 
 }
 
+function rnd() {
+    let palautus = Math.floor(Math.random() * 6) + 1;
+    if (palautus == 1 && noppienlkm == 1 && edelliset[0] == 1) { /* yhdellä nopalla ei kahta ykköstä peräkkäin */
+        palautus = 3;
+        console.log('lukua muutettu');
+    }
+    return palautus;
+}
+
 const noppakaannot = [
-    'rotate3d(0,0,0,0deg)',
+    'rotate3d(1,1,1,360deg)',
     'rotate3d(0,1,0,-450deg)',
     'rotate3d(1,0,0,450deg)',
     'rotate3d(1,0,0,-810deg)',
@@ -197,35 +264,43 @@ const noppakaannot = [
     'rotate3d(0,-1,0,540deg)'
 ]
 
+let edelliset = [1,0];
+
 function paivitanoppa(numero,nopannro) {
     if (numero > 0 && numero < 7) {
         const noppa = document.querySelector('#noppa'+nopannro);
-        noppa.style.transform = noppakaannot[numero-1];
+        console.log(noppa.style.transform);
+
+        if (edelliset[nopannro-1] != numero) {
+            noppa.style.transform = noppakaannot[numero-1];
+        } else {
+            /* sama numero kuin edellisellä heitolla, pyöritetään noppaa 360 astetta  */
+            let kaanto = noppa.style.transform;
+            let asteet = kaanto.split(',')[3].replace('deg)','');
+            asteet = Number(asteet);
+            let uudet_asteet = asteet + 360;
+            kaanto = kaanto.replace(String(asteet),uudet_asteet)
+            noppa.style.transform = kaanto;
+        }
+        edelliset[nopannro-1] = numero;
     }
 }
 
+    /*
+
 document.addEventListener('keypress', (eve) => {
-    switch(eve.key) {
-        case '1':
-            paivitanoppa(1,1);
-            break;
-        case '2':
-            paivitanoppa(2,1);
-            break;
-        case '3':
-            paivitanoppa(3,1);
-            break;
-        case '4':
-            paivitanoppa(4,1);
-            break;
-        case '5':
-            paivitanoppa(5,1);
-            break;
-        case '6':
-            paivitanoppa(6,1);
-            break;
+    let luku = rnd();
+    console.log(luku);
+    paivitanoppa(luku,1);
+    
+    if (noppienlkm == 2) {
+        paivitanoppa(rnd(),2);
+
     }
+    
 });
+    */
+
 
 
 document.querySelector('#pellkm').focus();

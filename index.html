@@ -117,7 +117,7 @@
                 <div id="pelialue">
                     <div class="row">
                     <div class="col-lg-6 pe-1" id="pelaajalista">
-                        <!-- Starts here-->
+<!-- POISTO ALKAA TÄSTÄ -->
                         <div class="card" style="display: none;">
                             <div class="card-header text-start btn" data-bs-toggle="collapse" data-bs-target="#p1collapse">
                                 <h6 id="p1nimi" class="mb-0">Pelaaja #1<span id="p1ypisteet-badge" class="badge float-end text-bg-secondary">10 pistettä</span></h6>
@@ -151,17 +151,20 @@
                                </div>
                             </div>  <!-- end p1collapse-->
                         </div>
-                        <!-- ends here -->
+<!-- POISTO LOPPUU TÄHÄN -->                        
+
                     </div>
                     <div class="col ps-1">
-                        <div class="card mt-2">
+                        <div class="card mt-2 piilossa" id="toiminta-alue">
                             <div class="card-body">
                                 <div class="alert alert-info">
-                                    <p class="mb-0"><strong>Jussi</strong>, sinun vuorosi.<br>Heitetään noppaa<br>kolmas rivi</p>
+                                    <p class="mb-0"><strong id="nykyinenpelaaja">Jussi</strong>, sinun vuorosi.</p>
+                                    <p class="mb-0" id="statusrivi">Heitetään noppaa</p>
                                 </div>
-                                <div class="row">
-                                    <div class="noppa-alue px-0" id="noppa1-alue">
-                                        <div id="noppa1">
+                                <div class="row mb-3">
+                                    <div style="width:25%;"></div>
+                                    <div class="noppa-alue px-0 offset-md-2" id="noppa1-alue">
+                                        <div id="noppa1" class="nopat">
                                             <div class="noppa_sivu text-bg-danger" id="sivu1">1</div>
                                             <div class="noppa_sivu text-bg-secondary" id="sivu2">2</div>
                                             <div class="noppa_sivu text-bg-secondary" id="sivu3">3</div>
@@ -171,7 +174,7 @@
                                         </div>
                                     </div>
                                     <div class="noppa-alue px-0 piilossa" id="noppa2-alue">
-                                        <div id="noppa2">
+                                        <div id="noppa2" class="nopat">
                                             <div class="noppa_sivu text-bg-danger" id="sivu1">1</div>
                                             <div class="noppa_sivu text-bg-secondary" id="sivu2">2</div>
                                             <div class="noppa_sivu text-bg-secondary" id="sivu3">3</div>
@@ -179,6 +182,13 @@
                                             <div class="noppa_sivu text-bg-secondary" id="sivu5">5</div>
                                             <div class="noppa_sivu text-bg-secondary" id="sivu6">6</div>
                                         </div>
+                                    </div>
+                                    <div style="width:25%;"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-center napit">
+                                        <button class="btn btn-primary btn-sm me-2 disabled">Jää tähän</button>
+                                        <button class="btn btn-primary btn-sm" onclick="if (!this.classList.contains('disabled')) { pelivuoro(false); }">Heitä noppaa</button>
                                     </div>
                                 </div>
                             </div>
