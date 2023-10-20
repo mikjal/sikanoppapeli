@@ -118,7 +118,7 @@
                         <h3>Onneksi olkoon</h3>
                         <h2 id="voittajannimi">Nimi</h2>
                         <h3>Voitit pelin <span id="voittajanpisteet">100</span> pisteellä!</h3>
-                        <button class="btn btn-primary mt-4" onclick="window.location.reload()">Pelaa uudelleen</button>
+                        <button accesskey="p" type="button" class="btn btn-primary mt-4" id="playagain" onclick="window.location.reload()">Pelaa uudelleen</button>
                     </div>
                 </div>
                 <div id="pelialue">
@@ -157,8 +157,8 @@
                                     </div>
                                     <div class="row mt-4">
                                         <div class="col text-center napit">
-                                            <button class="btn btn-primary btn-sm me-2 disabled" onclick="if (!this.classList.contains('disabled')) { pelivuoroSeuraavalle(); }">Jää tähän</button>
-                                            <button class="btn btn-primary btn-sm disabled" id="pyoritabutton" onclick="if (!this.classList.contains('disabled')) { pelivuoro(false); }">Pyöritä noppaa</button>
+                                            <button accesskey="j" type="button" class="btn btn-primary btn-sm me-2 disabled" id="jaabutton" onclick="if (!this.classList.contains('disabled')) { pelivuoroSeuraavalle(); }">Jää tähän</button>
+                                            <button accesskey="p" type="button" class="btn btn-primary btn-sm disabled" id="pyoritabutton" onclick="if (!this.classList.contains('disabled')) { pelivuoro(false); }">Pyöritä noppaa</button>
                                         </div>
                                     </div>
                                 </div> <!-- end card-body -->

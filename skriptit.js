@@ -143,7 +143,6 @@ function pelivuoro(pelaajavaihtui) { /* pelaajavahtui = true jos vuoro vaihtui s
     if (luku2) {
         paivitanoppa(luku2,2);
     }
-    console.log(document.querySelector('#noppa1').ontransitionend);
 
     /* alustetaan transitionend event jos sitä ei ole aiemmin tehty */
     if (document.querySelector('#noppa1').ontransitionend == null) {
@@ -207,6 +206,12 @@ function pelivuoro(pelaajavaihtui) { /* pelaajavahtui = true jos vuoro vaihtui s
                 document.querySelectorAll('.napit button').forEach(itm => {
                     itm.classList.remove('disabled');
                 });
+
+                if (document.activeElement.type != 'button') {
+                    document.querySelector('#jaabutton').focus();
+                }
+                
+
                 if (vuoronpisteet + pelaajalista[nykyinenpelaaja-1].pistemaara >= pisteraja) {
                     document.querySelector('#statusrivi').innerText = 'Jää tähän, pisteesi riittävät jo voittoon!';
                 }
@@ -234,6 +239,7 @@ function pelivuoroSeuraavalle() {
         document.querySelector('#voittoviesti').style.display = 'initial';
         document.querySelector('#voittoviesti').style.zIndex = 100;
         document.querySelector('#voittajannimi').style.animation = 'zoomi 1s ease 1s 2 alternate';
+        document.querySelector('#playagain').focus();
 
     } else {
         /* ei voittoa, pelivuoro siirtyy seuraavalle */
