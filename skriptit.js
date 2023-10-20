@@ -106,9 +106,6 @@ function odotaCollapse() { /* jatketaan tästä kun nimensyöttöjen jälkeen vi
 }
 
 function pelivuoro(pelaajavaihtui) { /* pelaajavahtui = true jos vuoro vaihtui seuraavalle pelaajalle */
-/*    
-    document.querySelector('#noppa1').ontransitionend = '';
-*/
     let noppasana = (noppienlkm == 1) ? 'noppaa' : 'noppia';
     document.querySelector('#statusrivi').innerText = 'Pyöritetään '+noppasana;
 
@@ -214,8 +211,6 @@ function pelivuoro(pelaajavaihtui) { /* pelaajavahtui = true jos vuoro vaihtui s
                     document.querySelector('#statusrivi').innerText = 'Jää tähän, pisteesi riittävät jo voittoon!';
                 }
             }
-
-        
         } /* end transitionend*/
     }
 }
